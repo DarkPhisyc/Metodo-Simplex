@@ -28,7 +28,6 @@ public class metodoSimplex {
                     break;
             }
         } while(opcion != 3);
-        sc.close();
     }
 
     public static void maximizar(Scanner sc) {
@@ -60,5 +59,36 @@ public class metodoSimplex {
             System.out.print("b [ " + (i + 1) + " ]: ");
             b[i] = sc.nextDouble();
         }
-    }   
+    }
+
+    public static void minimizar(Scanner sc) {
+        System.out.println("Teclea el numero de variables (n): ");
+        int variables = sc.nextInt();
+
+        System.out.println("Teclea el numero de restricciones (m): ");
+        int restricciones = sc.nextInt();
+
+        double[] coeficientes = new double[variables];
+        System.out.println("Teclea los coeficientes de la funcion objetivo: ");
+        for(int i = 0; i < variables; i++) {
+            System.out.print("Coeficiente [ " + (i + 1) + " ]: ");
+            coeficientes[i] = -sc.nextDouble();
+         }
+
+        double[][] coef = new double[restricciones][variables];
+        System.out.println("Teclea los coeficientes de las restricciones: ");
+        for(int i = 0; i < restricciones; i++) {
+            System.out.println("Restriccion [ " + (i + 1) + " ]: ");
+            for(int j = 0; j < variables; j++) {
+                System.out.print("Coeficiente " + (j + 1) + ": ");
+                coef[i][j] = sc.nextDouble();
+            }
+        }
+
+        double[] b = new double[restricciones];
+        for(int i = 0; i < restricciones; i++) {
+            System.out.print("b [ " + (i + 1) + " ]: ");
+            b[i] = sc.nextDouble();
+        }
+    }
 }
