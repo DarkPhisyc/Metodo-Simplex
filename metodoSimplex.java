@@ -3,10 +3,8 @@ import java.util.Scanner;
 public class metodoSimplex {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         System.out.println("Resolver problemas por metodo simplex (maximizar o minimizar)");
         int opcion;
-
         do {
             System.out.println("\n \t \t \tMenu:");
             System.out.println("\n1. Maximizar");
@@ -14,7 +12,6 @@ public class metodoSimplex {
             System.out.println("3. Salir del programa");
             System.out.println("\nTeclea la opcion del metodo que deseas realizar: ");
             opcion = sc.nextInt();
-
             switch (opcion) {
                 case 1:
                     maximizar(sc);
@@ -29,7 +26,6 @@ public class metodoSimplex {
                     System.out.println("OPCION NO VALIDA");
                     break;
             }
-            
         } while(opcion != 3);
         sc.close();
     }
@@ -37,17 +33,14 @@ public class metodoSimplex {
     public static void maximizar(Scanner sc) {
         System.out.println("Teclea el numero de variables (n): ");
         int variables = sc.nextInt();
-
         System.out.println("Teclea el numero de restricciones (m): ");
         int restricciones = sc.nextInt();
-
         double[] coeficientes = new double[variables];
         System.out.println("Teclea los coeficientes de la funcion objetivo: ");
         for(int i = 0; i < variables; i++) {
             System.out.print("Coeficiente [ " + (i + 1) + " ]: ");
             coeficientes[i] = sc.nextDouble();
         }
-
         double[][] coef = new double[restricciones][variables];
         System.out.println("Teclea los coeficientes de las restricciones: ");
         for(int i = 0; i < restricciones; i++) {
@@ -57,30 +50,25 @@ public class metodoSimplex {
                 coef[i][j] = sc.nextDouble();
             }
         }
-            
         double[] b = new double[restricciones];
         for(int i = 0; i < restricciones; i++) {
             System.out.print("b [ " + (i + 1) + " ]: ");
             b[i] = sc.nextDouble();
         }
-
         simplex(coef, b, coeficientes, false, sc);
     }
 
     public static void minimizar(Scanner sc) {
         System.out.println("Teclea el numero de variables (n): ");
         int variables = sc.nextInt();
-
         System.out.println("Teclea el numero de restricciones (m): ");
         int restricciones = sc.nextInt();
-
         double[] coeficientes = new double[variables];
         System.out.println("Teclea los coeficientes de la funcion objetivo: ");
         for(int i = 0; i < variables; i++) {
             System.out.print("Coeficiente [ " + (i + 1) + " ]: ");
             coeficientes[i] = sc.nextDouble();
         }
-
         double[][] coef = new double[restricciones][variables];
         System.out.println("Teclea los coeficientes de las restricciones: ");
         for(int i = 0; i < restricciones; i++) {
@@ -90,30 +78,25 @@ public class metodoSimplex {
                 coef[i][j] = sc.nextDouble();
             }
         }
-
         double[] b = new double[restricciones];
         for(int i = 0; i < restricciones; i++) {
             System.out.print("b [ " + (i + 1) + " ]: ");
             b[i] = sc.nextDouble();
         }
-
         double[] Max = new double[variables];
         for(int i = 0; i < variables; i++) {
             Max[i] = -coeficientes[i];
         }
-
         simplex(coef, b, Max, true, sc);
     }
 
     public static void simplex(double[][] coef, double[] b, double[] Max, boolean Min, Scanner sc) {
         int restricciones = coef.length;
         int variables = coef[0].length;
-
         if(restricciones == 0 || variables == 0) {
             System.out.println("No hay restricciones o variables.");
             return;
         }
-
         boolean factible = true;
         for(int i = 0; i < restricciones; i++) {
             if(b[i] < 0) {
@@ -121,17 +104,14 @@ public class metodoSimplex {
                 break;
             }
         }
-
         if(!factible) {
             System.out.println("No hay solucion factible.");
             return;
         }
-
         int columnas = variables + restricciones + 1;
         int filas = restricciones + 1;
         double[][] tab = new double[filas][columnas];
         int[] variablesBasicas = new int[restricciones];
-
         for(int i = 0; i < restricciones; i++) {
             for(int j = 0; j < variables; j++) {
                 tab[i][j] = coef[i][j];
@@ -140,7 +120,6 @@ public class metodoSimplex {
             tab[i][columnas - 1] = b[i];
             variablesBasicas[i] = variables + i;
         }
-        
         for(int i = 0; i < variables; i++) {
             tab[filas - 1][i] = -Max[i];
         }
@@ -148,15 +127,12 @@ public class metodoSimplex {
             tab[filas - 1][i] = 0.0;
         }
         tab[filas - 1][columnas - 1] = 0.0;
-        
         boolean optimo = false;
         boolean ilimitado = false;
         int iteracionesMax = 10000; 
         int iteracion = 0;
-
         while(!optimo && !ilimitado && iteracion < iteracionesMax) {
             iteracion++;
-
             int columnaPivote = -1;
             double valorMinimo = 0.0;
             for(int i = 0; i < columnas - 1; i++) {
@@ -164,13 +140,11 @@ public class metodoSimplex {
                     valorMinimo = tab[filas - 1][i];
                     columnaPivote = i;
                 }
-            }
-            
+            } 
             if(columnaPivote == -1) {
                 optimo = true;
                 break;
             }
-
             int filaPivote = -1;
             double razonMinima = Double.POSITIVE_INFINITY;
             for(int i = 0; i < restricciones; i++) {
@@ -183,13 +157,11 @@ public class metodoSimplex {
                     }
                 }
             }
-
             if(filaPivote == -1) {
                 ilimitado = true;
                 System.out.println("La solucion es ilimitada.");
                 return;
             }
-
             double pivote = tab[filaPivote][columnaPivote];
             for(int i = 0; i < columnas; i++) {
                 tab[filaPivote][i] /= pivote;
@@ -200,16 +172,13 @@ public class metodoSimplex {
                 for (int j = 0; j < columnas; j++) {
                     tab[i][j] -= factor * tab[filaPivote][j];
                 }
-            }
-            
+            }  
             variablesBasicas[filaPivote] = columnaPivote;
         }
-
         if(iteracion >= iteracionesMax) {
             System.out.println("Se alcanzo el numero maximo de iteraciones.");
             return;
         }
-
         if(optimo) {
             double solucionOptima = tab[filas - 1][columnas - 1];
             if(Min) {
@@ -223,7 +192,6 @@ public class metodoSimplex {
                     x[indiceVarBasica] = tab[i][columnas - 1];
                 }
             }
-
             boolean todasCero = true;
             for(int i = 0; i < variables; i++) {
                 System.out.println("X [ " + (i + 1) + " ]: " + x[i]);
@@ -234,12 +202,12 @@ public class metodoSimplex {
             if(todasCero) {
                 System.out.println("La solucion no es factible.");
             } else {
-                System.out.println("La solucion es factible.");
                 if(!Min) {
                     System.out.println("La solucion maxima mas optima de Z es: " + solucionOptima);
                 } else {
                     System.out.println("La solucion minima mas optima de Z es: " + solucionOptima);
                 }
+                System.out.println("La solucion es factible.");
             }
         }
     }
