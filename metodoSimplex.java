@@ -59,6 +59,8 @@ public class metodoSimplex {
             System.out.print("b [ " + (i + 1) + " ]: ");
             b[i] = sc.nextDouble();
         }
+
+        simplex(coef, b, coeficientes, false, sc);
     }
 
     public static void minimizar(Scanner sc) {
@@ -95,6 +97,8 @@ public class metodoSimplex {
         for(int i = 0; i < variables; i++) {
             Max[i] = -coeficientes[i];
         }
+
+        simplex(coef, b, Max, true, sc);
     }
 
     public static void simplex(double[][] coef, double[] b, double[] Max, boolean Min, Scanner sc) {
