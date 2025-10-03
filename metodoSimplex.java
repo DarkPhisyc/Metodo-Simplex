@@ -124,7 +124,14 @@ public class metodoSimplex {
         double[][] tab = new double[filas][columnas];
         int[] variablesBasicas = new int[restricciones];
 
-        
+        for (int i = 0; i < restricciones; i++) {
+            for (int j = 0; j < variables; j++) {
+                tab[i][j] = coef[i][j];
+            }
+            tab[i][variables + i] = 1.0;
+            tab[i][columnas - 1] = b[i];
+            variablesBasicas[i] = variables + i;
+        }
 
     }   
 }
