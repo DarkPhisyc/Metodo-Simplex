@@ -148,6 +148,39 @@ public class metodoSimplex {
 
         while (!optimo && !ilimitado && iteracion < iteracionesMax) {
             iteracion++;
+
+            int columnaPivote = -1;
+            double valorMinimo = 0.0;
+            for (int i = 0; i < columnas - 1; i++) {
+                if (tab[filas - 1][i] < valorMinimo) {
+                    valorMinimo = tab[filas - 1][i];
+                    columnaPivote = i;
+                }
+            }
+            
+            if (columnaPivote == -1) {
+                optimo = true;
+                break;
+            }
+
+            int filaPivote = -1;
+            double razonMinima = Double.POSITIVE_INFINITY;
+            for(int i = 0; i < restricciones; i++) {
+                double entrada = tab[i][columnaPivote];
+                if(entrada > 1e-10) {
+                    double razon = tab[i][columnas - 1] / entrada;
+                    if(razon < razonMinima - 1e-10 || (Math.abs(razon - razonMinima) < 1e-10 && variablesBasicas[i] > variablesBasicas[filaPivote])) {
+                        razonMinima = razon;
+                        filaPivote = i;
+                    }
+                }
+            }
+
+            if(filaPivote == -1) {
+                ilimitado = true;
+                System.out.println("La solucion es ilimitada.");
+                return;
+            }
         }
-    }   
-}
+    }
+}   
