@@ -132,6 +132,22 @@ public class metodoSimplex {
             tab[i][columnas - 1] = b[i];
             variablesBasicas[i] = variables + i;
         }
+        
+        for (int i = 0; i < variables; i++) {
+            tab[filas - 1][i] = -Max[i];
+        }
+        for (int i = variables; i < columnas - 1; i++) {
+            tab[filas - 1][i] = 0.0;
+        }
+        tab[filas - 1][columnas - 1] = 0.0;
+        
+        boolean optimo = false;
+        boolean ilimitado = false;
+        int iteracionesMax = 10000; 
+        int iteracion = 0;
 
+        while (!optimo && !ilimitado && iteracion < iteracionesMax) {
+            iteracion++;
+        }
     }   
 }
