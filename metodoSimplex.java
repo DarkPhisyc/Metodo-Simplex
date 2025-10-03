@@ -214,6 +214,23 @@ public class metodoSimplex {
             } else {
                 System.out.println("La solucion minima mas optima es: " + solucionOptima);
             }
+
+            double[] x = new double[variables];
+            for(int i = 0; i < restricciones; i++) {
+                int indiceVarBasica = variablesBasicas[i];
+                if(indiceVarBasica < variables) {
+                    x[indiceVarBasica] = tab[i][columnas - 1];
+                }
+            }
+
+            for(int i = 0; i < variables; i++) {
+                System.out.println("Solucion x [ " + (i + 1) + " ]:" + x[i]);
+                if(i < variables - 1) {
+                    System.out.print(", ");
+                } else {
+                    System.out.println("No es factible");
+                }
+            }
         }
     }
 }   
