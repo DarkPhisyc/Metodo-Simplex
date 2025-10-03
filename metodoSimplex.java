@@ -17,8 +17,10 @@ public class metodoSimplex {
 
             switch (opcion) {
                 case 1:
+                    maximizar(sc);
                     break;
                 case 2:
+                    minimizar(sc);
                     break;
                 case 3:
                     System.out.println("Saliendo...");
@@ -28,6 +30,7 @@ public class metodoSimplex {
                     break;
             }
         } while(opcion != 3);
+        sc.close();
     }
 
     public static void maximizar(Scanner sc) {
