@@ -181,6 +181,20 @@ public class metodoSimplex {
                 System.out.println("La solucion es ilimitada.");
                 return;
             }
+
+            double pivote = tab[filaPivote][columnaPivote];
+            for (int i = 0; i < columnas; i++) {
+                tab[filaPivote][i] /= pivote;
+            }
+            for (int i = 0; i < filas; i++) {
+                if (i == filaPivote) continue;
+                double factor = tab[i][columnaPivote];
+                for (int j = 0; j < columnas; j++) {
+                    tab[i][j] -= factor * tab[filaPivote][j];
+                }
+            }
+            
+            variablesBasicas[filaPivote] = columnaPivote;
         }
     }
 }   
