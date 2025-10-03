@@ -12,7 +12,7 @@ public class metodoSimplex {
             System.out.println("\n1. Maximizar");
             System.out.println("2. Minimizar");
             System.out.println("3. Salir del programa");
-            System.out.print("\nTeclea la opcion del metodo que deseas realizar: ");
+            System.out.println("\nTeclea la opcion del metodo que deseas realizar: ");
             opcion = sc.nextInt();
 
             switch (opcion) {
@@ -214,14 +214,7 @@ public class metodoSimplex {
             if(Min) {
                 solucionOptima = -solucionOptima;
             }
-            System.out.println("Solucion optima enncontrada en iteraciones: " + iteracion);
-            System.out.println("La solución es factible.");
-            if(!Min) {
-                System.out.println("La solución maxima mas optima es: " + solucionOptima);
-            } else {
-                System.out.println("La solucion minima mas optima es: " + solucionOptima);
-            }
-
+            System.out.println("\nSolucion optima encontrada en iteraciones: " + iteracion);
             double[] x = new double[variables];
             for(int i = 0; i < restricciones; i++) {
                 int indiceVarBasica = variablesBasicas[i];
@@ -230,12 +223,21 @@ public class metodoSimplex {
                 }
             }
 
+            boolean todasCero = true;
             for(int i = 0; i < variables; i++) {
-                System.out.println("Solucion x [ " + (i + 1) + " ]:" + x[i]);
-                if(i < variables - 1) {
-                    System.out.print(", ");
+                System.out.println("X [ " + (i + 1) + " ]: " + x[i]);
+                if(Math.abs(x[i]) > 1e-8) {
+                    todasCero = false;
+                }
+            }
+            if(todasCero) {
+                System.out.println("La solucion no es factible.");
+            } else {
+                System.out.println("La solucion es factible.");
+                if(!Min) {
+                    System.out.println("La solucion maxima mas optima de Z es: " + solucionOptima);
                 } else {
-                    System.out.println("No es factible");
+                    System.out.println("La solucion minima mas optima de Z es: " + solucionOptima);
                 }
             }
         }
