@@ -29,6 +29,7 @@ public class metodoSimplex {
                     System.out.println("OPCION NO VALIDA");
                     break;
             }
+            
         } while(opcion != 3);
         sc.close();
     }
