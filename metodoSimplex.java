@@ -90,6 +90,7 @@ public class metodoSimplex {
             System.out.print("b [ " + (i + 1) + " ]: ");
             b[i] = sc.nextDouble();
         }
+
         double[] Max = new double[variables];
         for (int i = 0; i < variables; i++) {
             Max[i] = -coeficientes[i];
@@ -99,10 +100,31 @@ public class metodoSimplex {
     public static void simplex(double[][] coef, double[] b, double[] Max, boolean Min, Scanner sc) {
         int restricciones = coef.length;
         int variables = coef[0].length;
+
         if(restricciones == 0 || variables == 0) {
             System.out.println("No hay restricciones o variables.");
             return;
         }
+
+        boolean factible = true;
+        for(int i = 0; i < restricciones; i++) {
+            if(b[i] < 0) {
+                factible = false;
+                break;
+            }
+        }
+
+        if(!factible) {
+            System.out.println("No hay solucion factible.");
+            return;
+        }
+
+        int columnas = variables + restricciones + 1;
+        int filas = restricciones + 1;
+        double[][] tab = new double[filas][columnas];
+        int[] variablesBasicas = new int[restricciones];
+
         
-    }
+
+    }   
 }
