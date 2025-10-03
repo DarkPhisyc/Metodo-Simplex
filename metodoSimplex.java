@@ -92,7 +92,7 @@ public class metodoSimplex {
         }
 
         double[] Max = new double[variables];
-        for (int i = 0; i < variables; i++) {
+        for(int i = 0; i < variables; i++) {
             Max[i] = -coeficientes[i];
         }
     }
@@ -124,8 +124,8 @@ public class metodoSimplex {
         double[][] tab = new double[filas][columnas];
         int[] variablesBasicas = new int[restricciones];
 
-        for (int i = 0; i < restricciones; i++) {
-            for (int j = 0; j < variables; j++) {
+        for(int i = 0; i < restricciones; i++) {
+            for(int j = 0; j < variables; j++) {
                 tab[i][j] = coef[i][j];
             }
             tab[i][variables + i] = 1.0;
@@ -133,10 +133,10 @@ public class metodoSimplex {
             variablesBasicas[i] = variables + i;
         }
         
-        for (int i = 0; i < variables; i++) {
+        for(int i = 0; i < variables; i++) {
             tab[filas - 1][i] = -Max[i];
         }
-        for (int i = variables; i < columnas - 1; i++) {
+        for(int i = variables; i < columnas - 1; i++) {
             tab[filas - 1][i] = 0.0;
         }
         tab[filas - 1][columnas - 1] = 0.0;
@@ -146,19 +146,19 @@ public class metodoSimplex {
         int iteracionesMax = 10000; 
         int iteracion = 0;
 
-        while (!optimo && !ilimitado && iteracion < iteracionesMax) {
+        while(!optimo && !ilimitado && iteracion < iteracionesMax) {
             iteracion++;
 
             int columnaPivote = -1;
             double valorMinimo = 0.0;
-            for (int i = 0; i < columnas - 1; i++) {
+            for(int i = 0; i < columnas - 1; i++) {
                 if (tab[filas - 1][i] < valorMinimo) {
                     valorMinimo = tab[filas - 1][i];
                     columnaPivote = i;
                 }
             }
             
-            if (columnaPivote == -1) {
+            if(columnaPivote == -1) {
                 optimo = true;
                 break;
             }
@@ -183,10 +183,10 @@ public class metodoSimplex {
             }
 
             double pivote = tab[filaPivote][columnaPivote];
-            for (int i = 0; i < columnas; i++) {
+            for(int i = 0; i < columnas; i++) {
                 tab[filaPivote][i] /= pivote;
             }
-            for (int i = 0; i < filas; i++) {
+            for(int i = 0; i < filas; i++) {
                 if (i == filaPivote) continue;
                 double factor = tab[i][columnaPivote];
                 for (int j = 0; j < columnas; j++) {
@@ -195,6 +195,25 @@ public class metodoSimplex {
             }
             
             variablesBasicas[filaPivote] = columnaPivote;
+        }
+
+        if(iteracion >= iteracionesMax) {
+            System.out.println("Se alcanzo el numero maximo de iteraciones.");
+            return;
+        }
+
+        if(optimo) {
+            double solucionOptima = tab[filas - 1][columnas - 1];
+            if(Min) {
+                solucionOptima = -solucionOptima;
+            }
+            System.out.println("Solucion optima enncontrada en iteraciones: " + iteracion);
+            System.out.println("La solución es factible.");
+            if(!Min) {
+                System.out.println("La solución maxima mas optima es: " + solucionOptima);
+            } else {
+                System.out.println("La solucion minima mas optima es: " + solucionOptima);
+            }
         }
     }
 }   
